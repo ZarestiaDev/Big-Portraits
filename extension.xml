@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<root version="3.3" >
+	<properties>
+		<name>Feature: Big Portraits</name>
+		<version>1.0</version>
+		<loadorder>50</loadorder>
+		<description>
+			<text>Making Portraits actually visible</text>
+			<website></website>
+			<author>Zarestia</author>
+		</description>
+		<ruleset>
+			<name>5E</name>
+		</ruleset>
+	</properties>
+
+	<announcement text="5E Big Portraits - v1.0 \rby Zarestia, 2022\r---" font="emotefont"/>
+
+	<base>
+		<includefile source="campaign/5e_record_char.xml" ruleset="5E" />
+		<includefile source="campaign/5e_record_char_main.xml" ruleset="5E" />
+		<includefile source="campaign/template_campaign.xml" ruleset="5E" />
+		<includefile source="graphics/graphics_portraits.xml" />
+		<includefile source="desktop/template_desktop.xml" />
+	</base>
+</root>

@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="charsheet" merge="join">
+		<frame>charsheet</frame>
+		<placement>
+			<size width="580" height="570" />
+		</placement>
+		<sizelimits>
+			<minimum width="580" height="570" />
+			<dynamic />
+		</sizelimits>
+		<softclose />
+		<nodelete />
+		<playercontrol />
+		<minimize>minimized_char</minimize>
+		<tooltip field="name" />
+		<export>character</export>
+		<script file="campaign/scripts/char.lua" />
+		<sheetdata>
+			
+			<genericcontrol name="portraitbase">
+				<anchored to="contentanchor" position="belowleft" offset="5,8" width="148" height="148" />
+				<icon>charlist_base</icon>
+				<disabled />
+			</genericcontrol>
+			<portrait_char name="portrait">
+				<anchored to="contentanchor" position="belowleft" offset="5,8" width="148" height="148" />
+			</portrait_char>
+			
+			<label_charframetop name="nametitle">
+				<anchored to="contentanchor" height="20">
+					<top anchor="bottom" offset="7" />
+					<left offset="170" />
+					<right offset="-135" />
+				</anchored>
+				<static textres="char_label_name" />
+			</label_charframetop>
+			<stringu name="name">
+				<anchored to="nametitle" position="insidetopleft" offset="-5,25" height="20">
+					<right />
+				</anchored>
+			</stringu>
+
+			<number_charlevel name="level">
+				<bounds>0,0,0,0</bounds>
+				<invisible />
+			</number_charlevel>
+
+			<label_charframetop name="classleveltitle">
+				<anchored to="contentanchor" height="20">
+					<top anchor="bottom" offset="60" />
+					<left offset="170" />
+					<right offset="-80" />
+				</anchored>
+				<icons>char_class</icons>
+				<static textres="char_label_classlevel" />
+			</label_charframetop>
+			<stringc_charclasslevel name="classlevel">
+				<anchored to="classleveltitle" position="insidetopleft" offset="-5,25">
+					<right offset="-10" />
+				</anchored>
+			</stringc_charclasslevel>
+			
+			<button_charclasslevel name="button_classlevel">
+				<anchored to="classlevel" position="righthigh" offset="0,0" />
+			</button_charclasslevel>
+			<label_charframetop name="profbonustitle">
+				<anchored to="classleveltitle" position="right" offset="20,0" width="35" />
+				<static textres="char_label_profbonus" />
+			</label_charframetop>
+			<number_linked name="profbonus">
+				<anchored to="profbonustitle" position="insidetop" offset="0,27" height="20" />
+				<frame name="fieldlight" offset="7,5,7,5" />
+				<displaysign />
+				<source>
+					<name>level</name>
+					<op>+</op>
+				</source>
+				<script>
+					function onSourceUpdate()
+						local nLevel = calculateSources();
+						local nBonus = math.max(2, math.floor((nLevel - 1) / 4) + 2);
+						setValue(nBonus);
+					end
+				</script>
+			</number_linked>
+
+			<label_charframetop name="backgroundtitle">
+				<anchored to="contentanchor" height="20">
+					<top anchor="bottom" offset="115" />
+					<left offset="170" />
+					<right anchor="center" offset="50" />
+				</anchored>
+				<icons>char_background</icons>
+				<static textres="char_label_background" />
+			</label_charframetop>
+			<linkfield name="backgroundlink">
+				<anchored to="backgroundtitle" position="belowright" offset="-10,5" width="20" height="20" />
+				<description field="background" />
+				<closetoggle />
+				<invisible />
+				<script>
+					function onInit()
+						onValueChanged();
+					end
+					function onValueChanged()
+						if isEmpty() then
+							setVisible(false);
+						else
+							setVisible(true);
+						end
+					end
+				</script>
+			</linkfield>
+			<stringu name="background">
+				<anchored to="backgroundtitle" position="belowleft" offset="-5,5" height="20">
+					<right parent="backgroundlink" anchor="left" offset="-5" />
+				</anchored>
+			</stringu>
+
+			<label_charframetop name="racetitle">
+				<anchored to="contentanchor" height="20">
+					<top anchor="bottom" offset="115" />
+					<left anchor="center" offset="80" />
+					<right offset="-15" />
+				</anchored>
+				<icons>char_race</icons>
+				<static textres="char_label_race" />
+			</label_charframetop>
+			<linkfield name="racelink">
+				<anchored to="racetitle" position="belowright" offset="-10,5" width="20" height="20" />
+				<description field="race" />
+				<closetoggle />
+				<invisible />
+				<script>
+					function onInit()
+						onValueChanged();
+					end
+					function onValueChanged()
+						if isEmpty() then
+							setVisible(false);
+						else
+							setVisible(true);
+						end
+					end
+				</script>
+			</linkfield>
+			<stringu name="race">
+				<anchored to="racetitle" position="belowleft" offset="-5,5" height="20">
+					<right parent="racelink" anchor="left" offset="-5" />
+				</anchored>
+			</stringu>
+
+		</sheetdata>
+	</windowclass>
+</root>

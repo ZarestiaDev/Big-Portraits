@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="charsheet_main" merge="join">
+        <sheetdata>
+            <number_charlevel name="level" merge="delete" />
+            <label_charframetop name="classleveltitle" merge="delete" />
+            <stringc_charclasslevel name="classlevel" merge="delete" />
+            <button_charclasslevel name="button_classlevel" merge="delete"  />
+            <label_charframetop name="profbonustitle" merge="delete"  />
+            <number_linked name="profbonus" merge="delete"  />
+            <label_charframetop name="backgroundtitle" merge="delete"  />
+            <linkfield name="backgroundlink" merge="delete"  />
+            <stringu name="background" merge="delete"  />
+            <label_charframetop name="racetitle" merge="delete"  />
+            <linkfield name="racelink" merge="delete"  />
+            <stringu name="race" merge="delete"  />
+
+            <!-- Changed offsets to compensate for merge deletes -->
+            <label_charframetop name="statstitle">
+              <anchored height="20" width="60">
+                <top offset="10" />
+                <left offset="15" />
+              </anchored>
+              <static textres="char_label_stats" />
+            </label_charframetop>
+
+            <label_charframetop name="savestitle">
+              <anchored height="20" width="60">
+                <top offset="10" />
+                <right offset="-15" />
+              </anchored>
+              <static textres="char_label_save" />
+            </label_charframetop>
+
+            <subwindow name="sensescombat">
+              <anchored>
+                <top offset="0" />
+                <left offset="90" />
+                <right offset="-95" />
+                <bottom offset="-130" />
+              </anchored>
+              <class>charsheet_sensescombat</class>
+              <activate />
+              <fastinit />
+            </subwindow>
+        </sheetdata>
+    </windowclass>
+</root>
