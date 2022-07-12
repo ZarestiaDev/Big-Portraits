@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+    <!-- Change height to compensate portrait changes -->
+	<template name="sub_charsheet_overview">
+		<subwindow>
+			<anchored to="contentanchor" height="162">
+				<top anchor="bottom" relation="relative" />
+				<left />
+				<right />
+			</anchored>
+			<activate />
+			<fastinit />
+			<class>charsheet_overview</class>
+		</subwindow>
+	</template>
+</root>

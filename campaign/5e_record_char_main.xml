@@ -18,7 +18,9 @@
             <linkfield name="backgroundlink" merge="delete"  />
             <stringu name="background" merge="delete"  />
             <label_charframetop name="racetitle" merge="delete"  />
-            <linkfield name="racelink" merge="delete"  />
+            <genericcontrol name="racerightanchor" merge="delete" />
+            <linkfield_statich name="subracelink" merge="delete" />
+            <linkfield_statich name="racelink" merge="delete"  />
             <stringu name="race" merge="delete"  />
 
             <!-- Changed offsets to compensate for merge deletes -->

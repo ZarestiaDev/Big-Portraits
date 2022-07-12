@@ -3,47 +3,128 @@
 -- attribution and copyright information.
 --
 
-local sIdentity = nil;
+--
+--	INITIALIZATION AND HELPERS
+--
 
-function setActiveState(sUserState)
-	if sUserState == "idle" then
-		statewidget.setBitmap("charlist_idling");
-	elseif sUserState == "typing" then
-		statewidget.setBitmap("charlist_typing");
-	elseif sUserState == "afk" then
-		statewidget.setBitmap("charlist_afk");
+local _sIdentity = nil
+function setIdentity(s)
+	_sIdentity = s;
+end
+function getIdentity()
+	return _sIdentity
+end
+function getIdentityPath()
+	return "charsheet." .. _sIdentity;
+end
+function getIdentityToken()
+	return "portrait_" .. _sIdentity .. "_token"
+end
+function isIdentityOwned()
+	if not _sIdentity then
+		return false;
+	end
+	return User.isOwnedIdentity(_sIdentity);
+end
+
+--
+--	UI
+--
+
+function setMenuItems(sIdentity)
+	if resetMenuItems and registerMenuItem then
+		resetMenuItems();
+		if Session.IsHost then
+			registerMenuItem(Interface.getString("charlist_menu_ring"), "bell", 5);
+			registerMenuItem(Interface.getString("charlist_menu_kick"), "kick", 3);
+			registerMenuItem(Interface.getString("charlist_menu_kickconfirm"), "kickconfirm", 3, 5);
+			registerMenuItem(Interface.getString("charlist_menu_whisper"), "broadcast", 7);
+		else
+			if self.isIdentityOwned() then
+				registerMenuItem(Interface.getString("charlist_menu_afk"), "hand", 3);
+				registerMenuItem(Interface.getString("charlist_menu_release"), "erase", 5);
+			else
+				registerMenuItem(Interface.getString("charlist_menu_whisper"), "broadcast", 7);
+			end
+		end
+	end
+end
+function onMenuSelection(selection, subselection)
+	if selection == 7 then
+		ChatManager.sendWhisperToID(self.getIdentity());
 	else
-		statewidget.setBitmap();
+		if Session.IsHost then
+			if selection == 5 then
+				User.ringBell(User.getIdentityOwner(self.getIdentity()));
+			elseif selection == 3 and subselection == 5 then
+				User.kick(User.getIdentityOwner(self.getIdentity()));
+			end
+		else
+			if self.isIdentityOwned() then
+				if selection == 3 then
+					CharacterListManager.toggleAFK();
+				elseif selection == 5 then
+					User.releaseIdentity(self.getIdentity());
+				end
+			end
+		end
 	end
 end
 
-function setCurrent(nCurrentState, sUserState)
-	if nCurrentState then
-		namewidget.setFont("mini_name_selected");
-		setActiveState(sUserState);
+function onClickDown(button, x, y)
+	return true;
+end
+function onClickRelease(button, x, y)
+	if Session.IsHost then
+		self.bringCharacterToTop();
 	else
-		namewidget.setFont("mini_name");
-		setActiveState("active");
+		if self.isIdentityOwned() then
+			self.setCurrentIdentity(self.getIdentity());
+
+			local aOwned = User.getOwnedIdentities();
+			if #aOwned == 1 then
+				self.bringCharacterToTop();
+			end
+		end
+	end
+	return true;
+end
+function onDoubleClick(x, y)
+	if Session.IsHost or self.isIdentityOwned() then
+		self.bringCharacterToTop();
+	end
+	return true;
+end
+function onDragStart(button, x, y, draginfo)
+	if Session.IsHost or self.isIdentityOwned() then
+		local sToken = self.getIdentityToken();
+		local sPath = self.getIdentityPath();
+		local sName = DB.getValue(DB.getPath(sPath, "name"), "");
+		
+		draginfo.setType("shortcut");
+		draginfo.setTokenData(sToken);
+		draginfo.setShortcutData("charsheet", sPath);
+		draginfo.setStringData(sName);
+
+		local base = draginfo.createBaseData();
+		base.setType("token");
+		base.setTokenData(sToken);
+	
+		return true;
 	end
 end
-
-function setName(sName)
-	if sName ~= "" then
-		namewidget.setText(sName);
-	else
-		namewidget.setText(Interface.getString("charlist_emptyname"));
-	end
+function onDrop(x, y, draginfo)
+	return CharacterListManager.processDrop(self.getIdentity(), draginfo);
 end
 
-function updateColor()
-	colorwidget.setColor(User.getIdentityColor(sIdentity));
-	colorwidget.setVisible(true);
-end
+--
+--	STANDARD BEHAVIORS
+--
 
-function createWidgets(name)
-	sIdentity = name;
+function createWidgets(sIdentity)
+	self.setIdentity(sIdentity);
 
-	portraitwidget = addBitmapWidget("portrait_" .. name .. "_charlist");
+	portraitwidget = addBitmapWidget("portrait_" .. sIdentity .. "_charlist");
 	-- OVERWRITE of CoreRPG to fix the connected character portraits in the upper left
 	portraitwidget.setSize(72,72);
 	-- OVERWRITE END
@@ -61,114 +142,56 @@ function createWidgets(name)
 	colorwidget.setVisible(false);
 end
 
-function setMenuItems(name)
-	resetMenuItems();
-	if Session.IsHost then
-		registerMenuItem(Interface.getString("charlist_menu_ring"), "bell", 5);
-		registerMenuItem(Interface.getString("charlist_menu_kick"), "kick", 3);
-		registerMenuItem(Interface.getString("charlist_menu_kickconfirm"), "kickconfirm", 3, 5);
-		registerMenuItem(Interface.getString("charlist_menu_whisper"), "broadcast", 7);
+function setCurrent(nCurrentState)
+	if nCurrentState then
+		namewidget.setFont("mini_name_selected");
+		self.setActiveState("active");
 	else
-		if User.isOwnedIdentity(name) then
-			registerMenuItem(Interface.getString("charlist_menu_afk"), "hand", 3);
-			registerMenuItem(Interface.getString("charlist_menu_release"), "erase", 5);
-		else
-			registerMenuItem(Interface.getString("charlist_menu_whisper"), "broadcast", 7);
-		end
+		namewidget.setFont("mini_name");
+		self.setActiveState("active");
 	end
 end
-
-function onClickDown(button, x, y)
-	return true;
-end
-
-function onClickRelease(button, x, y)
-	if Session.IsHost then
-		bringCharacterToTop();
+function setActiveState(sUserState)
+	if sUserState == "idle" then
+		statewidget.setBitmap("charlist_idling");
+	elseif sUserState == "typing" then
+		statewidget.setBitmap("charlist_typing");
+	elseif sUserState == "afk" then
+		statewidget.setBitmap("charlist_afk");
 	else
-		if User.isOwnedIdentity(sIdentity) then
-			setCurrentIdentity(sIdentity);
-
-			local aOwned = User.getOwnedIdentities();
-			if #aOwned == 1 then
-				bringCharacterToTop();
-			end
-		end
-	end
-	return true;
-end
-
-function onDoubleClick(x, y)
-	if Session.IsHost or User.isOwnedIdentity(sIdentity) then
-		bringCharacterToTop();
-	end
-	return true;
-end
-
-function onDragStart(button, x, y, draginfo)
-	if Session.IsHost or User.isOwnedIdentity(sIdentity) then
-		local sName = DB.getValue("charsheet." .. sIdentity .. ".name", "");
-		local sToken = "portrait_" .. sIdentity .. "_token";
-		local sPath = "charsheet." .. sIdentity;
-		
-		draginfo.setType("shortcut");
-		draginfo.setTokenData(sToken);
-		draginfo.setShortcutData("charsheet", sPath);
-		draginfo.setStringData(sName);
-
-		local base = draginfo.createBaseData();
-		base.setType("token");
-		base.setTokenData(sToken);
-	
-		return true;
+		statewidget.setBitmap();
 	end
 end
-
-function onDrop(x, y, draginfo)
-	return CharacterListManager.processDrop(sIdentity, draginfo);
-end
-
-function onMenuSelection(selection, subselection)
-	if Session.IsHost then
-		if selection == 5 then
-			User.ringBell(User.getIdentityOwner(sIdentity));
-		elseif selection == 3 and subselection == 5 then
-			User.kick(User.getIdentityOwner(sIdentity));
-		elseif selection == 7 then
-			ChatManager.sendWhisperToID(sIdentity);
-		end
+function setName(sName)
+	if sName ~= "" then
+		namewidget.setText(sName);
 	else
-		if User.isOwnedIdentity(sIdentity) then
-			if selection == 3 then
-				CharacterListManager.toggleAFK();
-			elseif selection == 5 then
-				User.releaseIdentity(sIdentity);
-			end
-		else
-			if selection == 7 then
-				ChatManager.sendWhisperToID(sIdentity);
-			end
-		end
+		namewidget.setText(Interface.getString("charlist_emptyname"));
 	end
 end
+function updateColor()
+	colorwidget.setColor(User.getIdentityColor(self.getIdentity()));
+	colorwidget.setVisible(true);
+end
 
-function setCurrentIdentity(sCurrentIdentity)
-	User.setCurrentIdentity(sCurrentIdentity);
+function setCurrentIdentity(sIdentity)
+	User.setCurrentIdentity(sIdentity);
 
-	if CampaignRegistry and CampaignRegistry.colortables and CampaignRegistry.colortables[sCurrentIdentity] then
-		local colortable = CampaignRegistry.colortables[sCurrentIdentity];
+	if CampaignRegistry and CampaignRegistry.colortables and CampaignRegistry.colortables[sIdentity] then
+		local colortable = CampaignRegistry.colortables[sIdentity];
 		User.setCurrentIdentityColors(colortable.color or "000000", colortable.blacktext or false);
 	end
 end
 
 function bringCharacterToTop()
-	local wndMain = Interface.findWindow("charsheet", "charsheet." .. sIdentity);
-	local wndMini = Interface.findWindow("charsheetmini", "charsheet." .. sIdentity);
+	local sPath = self.getIdentityPath();
+	local wndMain = Interface.findWindow("charsheet", sPath);
+	local wndMini = Interface.findWindow("charsheetmini", sPath);
 	if wndMain then
 		wndMain.bringToFront();
 	elseif wndMini then
 		wndMini.bringToFront();
 	else
-		Interface.openWindow("charsheet", "charsheet." .. sIdentity);
+		Interface.openWindow("charsheet", sPath);
 	end
 end

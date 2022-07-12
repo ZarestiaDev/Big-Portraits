@@ -15,34 +15,30 @@
 			<minimum width="580" height="570" />
 			<dynamic />
 		</sizelimits>
-		<softclose />
-		<nodelete />
-		<playercontrol />
-		<minimize>minimized_char</minimize>
-		<tooltip field="name" />
-		<export>character</export>
-		<script file="campaign/scripts/char.lua" />
+	</windowclass>
+
+	<windowclass name="charsheet_overview" merge="join">
+		<script file="campaign/scripts/char_overview.lua" />
 		<sheetdata>
-			
 			<genericcontrol name="portraitbase">
-				<anchored to="contentanchor" position="belowleft" offset="5,8" width="148" height="148" />
+				<anchored position="insidetopleft" offset="5,5" width="148" height="148" />
 				<icon>charlist_base</icon>
 				<disabled />
 			</genericcontrol>
 			<portrait_char name="portrait">
-				<anchored to="contentanchor" position="belowleft" offset="5,8" width="148" height="148" />
+				<anchored position="insidetopleft" offset="5,5" width="148" height="148" />
 			</portrait_char>
 			
 			<label_charframetop name="nametitle">
-				<anchored to="contentanchor" height="20">
-					<top anchor="bottom" offset="7" />
-					<left offset="170" />
-					<right offset="-135" />
+				<anchored to="rightanchor" height="20">
+					<top offset="2" />
+					<left parent="" offset="170" />
+					<right anchor="left" relation="relative" offset="-20" />
 				</anchored>
 				<static textres="char_label_name" />
 			</label_charframetop>
 			<stringu name="name">
-				<anchored to="nametitle" position="insidetopleft" offset="-5,25" height="20">
+				<anchored to="nametitle" position="belowleft" offset="-5,5" height="20">
 					<right />
 				</anchored>
 			</stringu>
@@ -53,8 +49,8 @@
 			</number_charlevel>
 
 			<label_charframetop name="classleveltitle">
-				<anchored to="contentanchor" height="20">
-					<top anchor="bottom" offset="60" />
+				<anchored height="20">
+					<top offset="60" />
 					<left offset="170" />
 					<right offset="-80" />
 				</anchored>
@@ -92,32 +88,19 @@
 			</number_linked>
 
 			<label_charframetop name="backgroundtitle">
-				<anchored to="contentanchor" height="20">
-					<top anchor="bottom" offset="115" />
+				<anchored height="20">
+					<top offset="115" />
 					<left offset="170" />
 					<right anchor="center" offset="50" />
 				</anchored>
 				<icons>char_background</icons>
 				<static textres="char_label_background" />
 			</label_charframetop>
-			<linkfield name="backgroundlink">
+			<linkfield_statich name="backgroundlink">
 				<anchored to="backgroundtitle" position="belowright" offset="-10,5" width="20" height="20" />
 				<description field="background" />
 				<closetoggle />
-				<invisible />
-				<script>
-					function onInit()
-						onValueChanged();
-					end
-					function onValueChanged()
-						if isEmpty() then
-							setVisible(false);
-						else
-							setVisible(true);
-						end
-					end
-				</script>
-			</linkfield>
+			</linkfield_statich>
 			<stringu name="background">
 				<anchored to="backgroundtitle" position="belowleft" offset="-5,5" height="20">
 					<right parent="backgroundlink" anchor="left" offset="-5" />
@@ -125,38 +108,39 @@
 			</stringu>
 
 			<label_charframetop name="racetitle">
-				<anchored to="contentanchor" height="20">
-					<top anchor="bottom" offset="115" />
+				<anchored height="20">
+					<top offset="115" />
 					<left anchor="center" offset="80" />
 					<right offset="-15" />
 				</anchored>
 				<icons>char_race</icons>
 				<static textres="char_label_race" />
 			</label_charframetop>
-			<linkfield name="racelink">
-				<anchored to="racetitle" position="belowright" offset="-10,5" width="20" height="20" />
+			<genericcontrol name="racerightanchor">
+				<anchored to="racetitle" position="belowright" offset="-5,5" width="0" height="20" />
+				<disabled />
+			</genericcontrol>
+			<linkfield_statich name="subracelink">
+				<anchored to="racerightanchor" width="20" height="20">
+					<top />
+					<right anchor="left" relation="relative" offset="0" />
+				</anchored>
 				<description field="race" />
 				<closetoggle />
-				<invisible />
-				<script>
-					function onInit()
-						onValueChanged();
-					end
-					function onValueChanged()
-						if isEmpty() then
-							setVisible(false);
-						else
-							setVisible(true);
-						end
-					end
-				</script>
-			</linkfield>
+			</linkfield_statich>
+			<linkfield_statich name="racelink">
+				<anchored to="racerightanchor" width="20" height="20">
+					<top />
+					<right anchor="left" relation="relative" offset="0" />
+				</anchored>
+				<description field="race" />
+				<closetoggle />
+			</linkfield_statich>
 			<stringu name="race">
 				<anchored to="racetitle" position="belowleft" offset="-5,5" height="20">
-					<right parent="racelink" anchor="left" offset="-5" />
+					<right parent="racerightanchor" anchor="left" relation="relative" offset="-5" />
 				</anchored>
 			</stringu>
-
 		</sheetdata>
 	</windowclass>
 </root>
