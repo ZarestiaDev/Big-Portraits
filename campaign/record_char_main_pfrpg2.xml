@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+	<windowclass name="charsheet_main" merge="join">
+		<script file="campaign/scripts/char_main.lua" />
+		<sheetdata>
+			<!-- ancestry -->
+			<frame_char name="ancestryframe" merge="delete" />
+			<linkfield name="racelink" merge="delete" />
+			<string_labeled name="race" merge="delete" />
+			
+			<!--Background-->
+			<frame_char name="backgroundframe" merge="delete" />
+			<linkfield name="backgroundlink" merge="delete" />
+			<string_labeled name="background" merge="delete" />
+
+			<button_text_sm name="chartrackerlaunch" merge="delete" />	
+
+			<!-- Class / Level -->
+			<frame_char name="classframe" merge="delete" />
+			<stringc_charclasslevel name="classlevel" merge="delete" />
+			<button_charclasslevel name="button_classlevel" merge="delete" />
+			
+			<!-- Traits -->
+			<frame_char name="traitsframe" merge="delete" />
+			<string_labeled name="traits" merge="delete" />	
+
+            <!-- Abilities -->
+			<frame_char name="abilityframe">
+				<bounds>15,0,275,225</bounds>
+			</frame_char>
+            <!-- Speed -->
+			<frame_char name="speedframe">
+				<bounds>15,225,385,50</bounds>
+			</frame_char>
+            <!-- Senses -->
+			<frame_char name="sensesframe">
+				<bounds>15,275,385,60</bounds>
+			</frame_char>
+            <!-- Health -->
+			<frame_char name="hpframe">
+				<bounds>15,335,385,100</bounds>
+			</frame_char>
+            <!-- Attacks -->
+			<frame_char name="combatframe">
+				<bounds>305,0,95,225</bounds>
+			</frame_char>
+            <!-- Defenses -->
+			<frame_char name="acframe">
+				<bounds>400,0,95,225</bounds>
+			</frame_char>
+            <!-- Saves -->
+            <frame_char name="saveframe">
+				<bounds>400,225,95,210</bounds>
+			</frame_char>
+		</sheetdata>
+	</windowclass>	
+</root>

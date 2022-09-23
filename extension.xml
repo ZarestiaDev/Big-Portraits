@@ -3,7 +3,7 @@
 <root version="3.3" >
 	<properties>
 		<name>Feature: Big Portraits</name>
-		<version>1.1</version>
+		<version>1.2</version>
 		<loadorder>50</loadorder>
 		<description>
 			<text>Making Portraits actually visible</text>
@@ -13,15 +13,25 @@
 		<ruleset>
 			<name>5E</name>
 		</ruleset>
+		<ruleset>
+			<name>PFRPG2</name>
+		</ruleset>
 	</properties>
 
-	<announcement text="5E Big Portraits - v1.1 \rby Zarestia, 2022\r---" font="emotefont"/>
+	<announcement text="https://forge.fantasygrounds.com/shop/items/647/view \n5E/PFRPG2 Big Portraits - v1.2 by Zarestia" font="emotefont" icon="bp_icon" />
 
 	<base>
-		<includefile source="campaign/5e_record_char.xml" ruleset="5E" />
-		<includefile source="campaign/5e_record_char_main.xml" ruleset="5E" />
-		<includefile source="campaign/template_char.xml" ruleset="5E" />
+		<includefile ruleset="5E" source="campaign/record_char_5e.xml" />
+		<includefile ruleset="5E" source="campaign/record_char_main_5e.xml" />
+		<includefile ruleset="5E" source="campaign/template_char_5e.xml" />
+
+		<includefile ruleset="PFRPG2" source="campaign/record_char_pfrpg2.xml" />
+		<includefile ruleset="PFRPG2" source="campaign/record_char_main_pfrpg2.xml" />
+
 		<includefile source="graphics/graphics_portraits.xml" />
 		<includefile source="desktop/template_desktop.xml" />
+		
+		<!-- Icon -->
+		<icon name="bp_icon" file="graphics/bp_icon.png" />
 	</base>
 </root>

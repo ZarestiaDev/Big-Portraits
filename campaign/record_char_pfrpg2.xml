@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<root>
+	<windowclass name="charsheet" merge="join">
+		<script file="campaign/scripts/char.lua" />
+		<frame>charsheet</frame>
+		<placement>
+			<size width="570" height="630" />
+		</placement>
+		<sizelimits>
+            <minimum width="570" height="630" />
+			<dynamic />
+        </sizelimits>
+		<sheetdata>
+			<button_charactivate name="speak">
+				<bounds>-70,25,23,22</bounds>
+			</button_charactivate>
+		
+			<token_char name="token">
+				<bounds>-76,55,40,40</bounds>
+			</token_char>
+			
+			<genericcontrol name="portraitbase" merge="replace">
+				<anchored position="insidetopleft" offset="20,19" width="148" height="148" />
+				<icon>charlist_base</icon>
+				<disabled />
+			</genericcontrol>
+			<portrait_char name="portrait" merge="replace">
+				<anchored position="insidetopleft" offset="20,19" width="148" height="148" />
+			</portrait_char>
+			
+			<frame_char name="overviewframe" merge="replace">
+                <anchored height="45" width="240">
+                    <top offset="10" />
+                    <left parent="portrait" anchor="right" />
+                </anchored>
+			</frame_char>
+
+            <button_text_sm name="chartrackerlaunch">
+				<anchored to="overviewframe" position="righthigh" offset="0,6" width="80" height="35" />
+				<state textres="char_button_chartracker" />
+				<script>
+					function onButtonPress()
+						local wCharTracker = Interface.findWindow( "chargen_tracker", window.getDatabaseNode() )
+						if wCharTracker then
+							Interface.toggleWindow( "chargen_tracker", window.getDatabaseNode() )
+						else
+							Interface.openWindow("chargen_tracker", window.getDatabaseNode());
+						end
+					end
+				</script>
+			</button_text_sm>	
+
+            <!-- ancestry -->
+			<frame_char name="ancestryframe" insertbefore="heroframe">
+                <anchored height="45" width="185">
+                    <top parent="overviewframe" anchor="bottom" offset="-5" />
+                    <left parent="portrait" anchor="right" />
+                </anchored>
+			</frame_char>
+			<linkfield name="racelink">
+				<anchored to="ancestryframe" position="insidetopright" offset="10,10" width="20" height="20" />
+				<description field="race" />
+				<closetoggle />
+				<invisible />
+				<script>
+					function onInit()
+						onValueChanged();
+					end
+					function onValueChanged()
+						if isEmpty() then
+							setVisible(false);
+						else
+							setVisible(true);
+						end
+					end
+				</script>
+			</linkfield>
+			<string_labeled name="race">
+				<anchored to="ancestryframe" position="insidetopleft" offset="15,10" height="20">
+					<right parent="racelink" anchor="left" offset="-5" />
+				</anchored>
+				<labelres>char_label_ancestry</labelres>
+			</string_labeled>
+
+            <frame_char name="heroframe" merge="replace">
+                <anchored to="ancestryframe" position="right" offset="-5" width="145" />
+			</frame_char>
+			
+			<!--Background-->
+			<frame_char name="backgroundframe">
+                <anchored height="45" width="185">
+                    <top parent="ancestryframe" anchor="bottom" offset="-5"  />
+                    <left parent="portrait" anchor="right" />
+                </anchored>
+			</frame_char>
+			<linkfield name="backgroundlink">
+				<anchored to="backgroundframe" position="insidetopright" offset="10,10" width="20" height="20" />
+				<description field="background" />
+				<closetoggle />
+				<invisible />
+				<script>
+					function onInit()
+						onValueChanged();
+					end
+					function onValueChanged()
+						if isEmpty() then
+							setVisible(false);
+						else
+							setVisible(true);
+						end
+					end
+				</script>
+			</linkfield>
+			<string_labeled name="background">
+				<anchored to="backgroundframe" position="insidetopleft" offset="15,10" height="20">
+					<right parent="backgroundlink" anchor="left" offset="-5" />
+				</anchored>
+				<labelres>char_label_background</labelres>
+			</string_labeled>			
+
+			<!-- Class / Level -->
+			<frame_char name="classframe">
+				<anchored height="45">
+                    <top parent="ancestryframe" anchor="bottom" offset="-5" />
+                    <left parent="backgroundframe" anchor="right"  offset="-5" />
+                    <right offset="-29" />
+                </anchored>
+			</frame_char>
+			<stringc_charclasslevel name="classlevel">
+				<anchored to="classframe" position="insidetopleft" offset="15,10">
+					<right offset="-25" />
+				</anchored>
+				<labelres>char_label_classlevelsummary</labelres>
+			</stringc_charclasslevel>
+			<button_charclasslevel name="button_classlevel">
+				<anchored to="classframe" position="insidetopright" offset="10,10" />
+			</button_charclasslevel>
+
+			<!-- Traits -->
+			<frame_char name="traitsframe">
+                <anchored height="45">
+                    <top parent="backgroundframe" anchor="bottom" offset="-5"  />
+                    <left parent="portrait" anchor="right" />
+                    <right offset="-29" />
+                </anchored>
+			</frame_char>
+			<string_labeled name="traits">
+				<anchored to="traitsframe" position="insidetopleft" offset="15,10" height="20">
+					<right offset="-10" />
+				</anchored>
+				<script file="common/scripts/string_traits_line.lua" />
+				<labelres>char_label_traits</labelres>
+			</string_labeled>	
+
+			<subwindow name="main">
+				<bounds>0,170,-1,-20</bounds>
+				<class>charsheet_main</class>
+			</subwindow>
+			<subwindow name="combat">
+				<bounds>0,170,-1,-20</bounds>
+				<class>charsheet_combat</class>
+			</subwindow>
+			<subwindow name="skills">
+				<bounds>0,170,-1,-20</bounds>
+				<class>charsheet_skills</class>
+				<fastinit />
+			</subwindow>
+			<subwindow name="abilities">
+				<bounds>0,170,-1,-20</bounds>
+				<class>charsheet_abilities</class>
+			</subwindow>
+			<subwindow name="inventory">
+				<bounds>0,170,-1,-20</bounds>
+				<class>charsheet_inventory</class>
+			</subwindow>
+			<subwindow name="notes">
+				<bounds>0,170,-1,-20</bounds>
+				<class>charsheet_notes</class>
+			</subwindow>
+			<subwindow name="actions">
+				<bounds>0,170,-1,-20</bounds>
+				<class>charsheet_actions</class>
+			</subwindow>
+		
+			<resize_charsheet />
+			<close_charsheet />
+		</sheetdata>
+	</windowclass>
+</root>
