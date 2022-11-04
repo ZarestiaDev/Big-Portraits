@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+    <template name="sub_charsheet_overview">
+		<subwindow>
+			<bounds>15,20,-30,155</bounds>
+			<activate />
+			<fastinit />
+			<class>charsheet_overview</class>
+		</subwindow>
+	</template>
+	<template name="sub_charsheet">
+		<subwindow>
+			<bounds>0,168,-1,-10</bounds>
+		</subwindow>
+	</template>
+
+	<windowclass name="charsheet_overview" merge="join">
+		<script file="campaign/scripts/char_coc7e.lua" />
+		<sheetdata>
+			<genericcontrol name="portraitbase">
+				<anchored position="insidetopleft" offset="0,0" width="148" height="148" />
+				<icon>charlist_base</icon>
+				<disabled />
+			</genericcontrol>
+			<portrait_char name="portrait">
+				<anchored position="insidetopleft" offset="0,0" width="148" height="148" />
+			</portrait_char>
+			
+			<frame_char name="overviewframe">
+				<anchored to="rightanchor" height="50">
+					<top offset="-5" />
+					<left parent="portrait" anchor="right" offset="0" />
+					<right anchor="left" relation="relative" />
+				</anchored>
+			</frame_char>
+
+			<!-- HP & Sanity -->
+			<frame_char name="hpsanityframe">
+				<anchored height="54">
+					<top parent="overviewframe" anchor="bottom" offset="0" />
+					<left parent="portrait" anchor="right" offset="0" />
+					<right />
+				</anchored>
+			</frame_char>
+			<number_linked name="maxhp" source="derived.maxhp">
+				<anchored to="hpsanityframe" position="insidetopleft" offset="60,20" width="30" height="20" />
+				<frame name="fieldlight" offset="5,5,5,5" />
+				<source><name>abilities.size</name><op>+</op></source>
+				<source><name>abilities.constitution</name><op>+</op></source>
+				<readonly />
+				<script>
+					function onSourceUpdate()
+						local bPulpMode = OptionsManager.isOption("PULP", "1");
+						if bPulpMode then
+							setValue(math.floor(calculateSources() / 5));
+						else
+							setValue(math.floor(calculateSources() / 10));
+						end
+						window.hp.setMaxValue(getValue());
+						if window.hp.getValue() == 0  and allSourcesNonZero() then
+							window.hp.setValue(getValue());
+						end
+					end
+		
+					function allSourcesNonZero()
+					  local n = 0;
+					
+					  local c = 0;
+					  for k, v in pairs(ops) do
+						if sources[k] then
+						  if self.onSourceValue(sources[k], k) == 0 then
+							return false;
+						  end
+						end
+					  end
+					  
+					  return true;
+					end
+				</script>
+			</number_linked>
+			<label name="maxhp_label">
+				<anchored to="maxhp" position="lefthigh" offset="2,0" width="40" height="20" />
+				<static textres="char_label_hp" />
+			</label>
+			<number_dropadd name="hp">
+				<anchored to="maxhp" position="right" offset="18,0" width="30" />
+			</number_dropadd>
+			<button_checkbox name="major_wound">
+				<anchored to="hp" position="lefthigh" offset="5,0" width="10" height="10" />
+				<tooltip textres="char_tooltip_major_wound" />
+			</button_checkbox>
+		
+			<label_fieldtop name="status_hpmax_label">
+				<anchored to="maxhp" />
+				<static textres="char_label_status_max" />
+			</label_fieldtop>
+			<label_fieldtop name="status_hpcurrent_label">
+				<anchored to="hp" />
+				<static textres="char_label_status_current" />
+			</label_fieldtop>
+		
+			<simplenumber name="maxsp" source="derived.maxsan">
+				<anchored to="hpsanityframe" position="insidetopleft" offset="195,20" width="30" height="20" />
+				<frame name="fieldlight" offset="5,5,5,5" />
+				<readonly />
+			</simplenumber>
+			<label name="maxsp_label">
+				<anchored to="maxsp" position="lefthigh" offset="2,0" width="40" />
+				<static textres="char_label_sp" />
+			</label>
+			<hn name="sessionsp">
+				<script>
+					function onInit()
+						local node = DB.getPath(window.getDatabaseNode(), "sessionsp");
+						DB.addHandler(node, "onUpdate", onSSPChanged);
+					end
+		
+					function onSSPChanged()
+						window.sp.updateState();
+					end
+		
+					function onClose()
+						local node = window.getDatabaseNode()
+						DB.removeHandler(DB.getPath(node, "sessionsp"), "onUpdate", onSSPChanged);
+					end
+				</script>
+			</hn>
+			<number_dropadd name="sp">
+				<anchored to="maxsp" position="right" offset="18,0" width="30" />
+				<rolltype>ability_sanity</rolltype>
+				<delaykeyupdate />
+				<script file="campaign/scripts/sanity.lua" />
+			</number_dropadd>
+			<button_checkbox name="temp_insanity">
+				<anchored to="sp" position="lefthigh" offset="5,0" width="10" height="10" />
+				<tooltip textres="char_tooltip_temp_insanity" />
+			</button_checkbox>
+			<button_checkbox name="indef_insanity">
+				<anchored to="sp" position="leftlow" offset="5,0" width="10" height="10" />
+				<tooltip textres="char_tooltip_indef_insanity" />
+			</button_checkbox>
+
+			<label_fieldtop name="status_spmax_label">
+				<anchored to="maxsp" />
+				<static textres="char_label_status_max" />
+			</label_fieldtop>
+			<label_fieldtop name="status_spcurrent_label">
+				<anchored to="sp" />
+				<static textres="char_label_status_current" />
+			</label_fieldtop>
+
+			<!-- Magic & Luck -->
+			<frame_char name="magicluckframe">
+				<anchored height="54">
+					<top parent="hpsanityframe" anchor="bottom" offset="0" />
+					<left parent="portrait" anchor="right" offset="0" />
+					<right />
+				</anchored>
+			</frame_char>
+
+			<number_linked name="maxmp" source="derived.maxmp">
+				<anchored to="magicluckframe" position="insidetopleft" offset="60,20" width="30" height="20" />
+				<frame name="fieldlight" offset="5,5,5,5" />
+				<source><name>abilities.power</name><op>+</op></source>
+				<readonly />
+				<script>
+					function onSourceUpdate()
+						setValue(math.floor(calculateSources() / 5));
+						window.mp.setMaxValue(getValue());
+						if window.mp.getValue() == 0 then
+							window.mp.setValue(getValue());
+						end
+					end
+				</script>
+			</number_linked>
+			<label name="maxmp_label">
+				<anchored to="maxmp" position="lefthigh" offset="2,0" width="40" />
+				<static textres="char_label_mp" />
+			</label>
+			<number_dropadd name="mp">
+				<anchored to="maxmp" position="right" offset="19,0" width="30" />
+			</number_dropadd>
+		
+			<label_fieldtop name="status_mpmax_label">
+				<anchored to="maxmp" />
+				<static textres="char_label_status_max" />
+			</label_fieldtop>
+			<label_fieldtop name="status_mpcurrent_label">
+				<anchored to="mp" />
+				<static textres="char_label_status_current" />
+			</label_fieldtop>
+		
+			<char_attribute_luck name="luck" source="abilities.luck">
+				<anchored to="magicluckframe" position="insidetopleft" offset="244,20" width="30" height="20" />
+			</char_attribute_luck>
+			<label name="luck_label">
+				<anchored to="mp" position="righthigh" offset="14,0" />
+				<static textres="char_label_luck" />
+			</label>
+			<label_fieldtop name="status_luckcurrent_label">
+				<anchored to="luck" />
+				<static textres="char_label_status_current" />
+			</label_fieldtop>
+		</sheetdata>
+	</windowclass>
+</root>

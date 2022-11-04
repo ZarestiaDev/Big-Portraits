@@ -3,7 +3,7 @@
 <root version="3.3" >
 	<properties>
 		<name>Feature: Big Portraits</name>
-		<version>1.2</version>
+		<version>1.3</version>
 		<loadorder>50</loadorder>
 		<description>
 			<text>Making Portraits actually visible</text>
@@ -16,9 +16,12 @@
 		<ruleset>
 			<name>PFRPG2</name>
 		</ruleset>
+		<ruleset>
+			<name>CallOfCthulhu7E</name>
+		</ruleset>
 	</properties>
 
-	<announcement text="https://forge.fantasygrounds.com/shop/items/647/view \n5E/PFRPG2 Big Portraits - v1.2 by Zarestia" font="emotefont" icon="bp_icon" />
+	<announcement text="https://forge.fantasygrounds.com/shop/items/647/view \n5E/PFRPG2/CoC7E Big Portraits - v1.3 by Zarestia" font="emotefont" icon="bp_icon" />
 
 	<base>
 		<includefile ruleset="5E" source="campaign/record_char_5e.xml" />
@@ -27,6 +30,9 @@
 
 		<includefile ruleset="PFRPG2" source="campaign/record_char_pfrpg2.xml" />
 		<includefile ruleset="PFRPG2" source="campaign/record_char_main_pfrpg2.xml" />
+
+		<includefile ruleset="CallOfCthulhu7E" source="campaign/record_char_coc7e.xml" />
+		<includefile ruleset="CallOfCthulhu7E" source="campaign/record_char_main_coc7e.xml" />
 
 		<includefile source="graphics/graphics_portraits.xml" />
 		<includefile source="desktop/template_desktop.xml" />

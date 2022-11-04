@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!-- 
+  Please see the license.html file included with this distribution for 
+  attribution and copyright information.
+-->
+
+<root>
+    <windowclass name="charsheet_main" merge="join">
+		<script file="campaign/scripts/char_main_coc7e.lua" />
+		<sheetdata>
+			<frame_char name="poolsframe" merge="delete" />
+			<number_linked name="maxhp" merge="delete" />
+			<label name="maxhp_label" merge="delete" />
+			<number_dropadd name="hp" merge="delete" />
+			<button_checkbox name="major_wound" merge="delete" />
+
+			<label_fieldtop name="status_max_label" merge="delete" />
+			<label_fieldtop name="status_current_label" merge="delete" />
+
+			<simplenumber name="maxsp" source="derived.maxsan" merge="delete" />
+			<label name="maxsp_label" merge="delete" />
+			<hn name="sessionsp" merge="delete" />
+			<number_dropadd name="sp" merge="delete" />
+			<button_checkbox name="temp_insanity" merge="delete" />
+			<button_checkbox name="indef_insanity" merge="delete" />
+
+			<label_fieldtop name="status_max_label" merge="delete" />
+			<label_fieldtop name="status_current_label" merge="delete" />
+
+			<number_linked name="maxmp" source="derived.maxmp" merge="delete" />
+			<label name="maxmp_label" merge="delete" />
+			<number_dropadd name="mp" merge="delete" />
+
+			<label_fieldtop name="status_max_label" merge="delete" />
+			<label_fieldtop name="status_current_label" merge="delete" />
+
+			<char_attribute_luck name="luck" source="abilities.luck" merge="delete" />
+			<label name="luck_label" merge="delete" />
+			<label_fieldtop name="status_current_label" merge="delete" />
+
+            <!-- Weapons and Spells -->
+			<frame_char name="actionframe">
+				<bounds>10,135,-19,-5</bounds>
+			</frame_char>
+		</sheetdata>
+	</windowclass>
+</root>
