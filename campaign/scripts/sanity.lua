@@ -8,20 +8,18 @@ end
 
 function resetSessionSanity()
 	-- get Session start SAN
-	local nStartSAN = getValue();
 	local node = window.getDatabaseNode();
-	local startSAN = node.getChild("sessionsp");
+	local startSAN = DB.getChild(node, "sessionsp");
 	startSAN.setValue(getValue());
 	updateState();
 end
 
 function initSessionStartSAN()
 	-- get Session start SAN
-	local nStartSAN = getValue();
 	local node = window.getDatabaseNode();
-	local startSAN = node.getChild("sessionsp");
+	local startSAN = DB.getChild(node, "sessionsp");
 	if not startSAN then
-		startSAN = node.createChild("sessionsp", "number");
+		startSAN = DB.createChild(node, "sessionsp", "number");
 		startSAN.setValue(getValue());
 	else
 		local nStartSAN = startSAN.getValue();

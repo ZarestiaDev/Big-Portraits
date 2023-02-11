@@ -19,8 +19,9 @@ function onInit()
 	DB.addHandler(DB.getPath(node, "sessionsp"), "onUpdate", onSanityChanged);
 	
 	nodeMythos = ActorManager2.getSkill(node, Interface.getString("char_skill_cthulhu_mythos"));
-	if nodeMythos and nodeMythos.getChild("total") then
-		DB.addHandler(nodeMythos.getChild("total").getPath(), "onUpdate", onMythosChanged);
+	local nMSkill = DB.getChild(nodeMythos, "total");
+	if nodeMythos and nMSkill then
+		DB.addHandler(DB.getPath(nMSkill), "onUpdate", onMythosChanged);
 		onMythosChanged();
 	end
 end
@@ -37,7 +38,7 @@ function onClose()
 	DB.removeHandler(DB.getPath(node, "sessionsp"), "onUpdate", onSanityChanged);
 	
 	if nodeMythos then
-		DB.removeHandler(nodeMythos.getPath(), "onUpdate", onMythosChanged);
+		DB.removeHandler(DB.getPath(nodeMythos), "onUpdate", onMythosChanged);
 	end
 end
 

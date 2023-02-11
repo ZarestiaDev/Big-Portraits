@@ -16,7 +16,7 @@ function onInit()
 	
 	local sVersion = DB.getValue(node, "version", "0");
 	if sVersion == "0" then
-		node.createChild("version", "string");
+		DB.createChild(node, "version", "string");
 		DB.setValue(node, "version", "string", "7");
 	end
 	
@@ -42,8 +42,8 @@ function onInit()
 	
 	nodeLangOwn = ActorManager2.getSkill(node, Interface.getString("char_lang_own_skill"));
 	nodeDodge = ActorManager2.getSkill(node, Interface.getString("char_skill_dodge"));
-	if nodeDodge and nodeDodge.getChild("total") then
-		DB.addHandler(nodeDodge.getChild("total").getPath(), "onUpdate", onDodgeChanged);
+	if nodeDodge and DB.getChild(nodeDodge, "total") then
+		DB.addHandler(DB.getPath(DB.getChild(nodeDodge, "total")), "onUpdate", onDodgeChanged);
 		onDodgeChanged();
 	end
 	
@@ -64,7 +64,7 @@ function onClose()
 	DB.removeHandler(DB.getPath(node, "age"), "onUpdate", onAgeChanged);
 	
 	if nodeDodge then
-		DB.removeHandler(nodeDodge.getChild("total").getPath(), "onUpdate", onDodgeChanged);
+		DB.removeHandler(DB.getPath(DB.getChild(nodeDodge, "total")), "onUpdate", onDodgeChanged);
 	end
 end
 
