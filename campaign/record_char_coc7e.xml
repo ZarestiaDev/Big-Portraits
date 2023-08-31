@@ -63,24 +63,9 @@
 							setValue(math.floor(calculateSources() / 10));
 						end
 						window.hp.setMaxValue(getValue());
-						if window.hp.getValue() == 0  and allSourcesNonZero() then
+						if window.hp.getValue() == 0 then
 							window.hp.setValue(getValue());
 						end
-					end
-		
-					function allSourcesNonZero()
-					  local n = 0;
-					
-					  local c = 0;
-					  for k, v in pairs(ops) do
-						if sources[k] then
-						  if self.onSourceValue(sources[k], k) == 0 then
-							return false;
-						  end
-						end
-					  end
-					  
-					  return true;
 					end
 				</script>
 			</number_linked>
