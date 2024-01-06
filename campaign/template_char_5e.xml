@@ -18,12 +18,15 @@
 		</subwindow>
 	</template>
 
-	<template name="sub_charsheet">
-		<subwindow>
-			<anchored position="insidetopleft" offset="15,182">
-				<right offset="-30" />
-				<bottom offset="-20" />
+	<template name="picture_charsheet">
+		<genericcontrol>
+			<anchored to="leftanchor" width="45" height="45">
+				<top offset="55" />
+				<left relation="relative" offset="5" postoffset="5" />
 			</anchored>
-		</subwindow>
+			<script file="campaign/scripts/picture_charsheet.lua" />
+			<portraitsize>148</portraitsize>
+			<!-- <widgetsize>20</widgetsize> -->
+		</genericcontrol>
 	</template>
 </root>
