@@ -16,6 +16,9 @@
 			<name>PFRPG2</name>
 		</ruleset>
 		<ruleset>
+			<name>PFRPG2-Legacy</name>
+		</ruleset>
+		<ruleset>
 			<name>CallOfCthulhu7E</name>
 		</ruleset>
 	</properties>
