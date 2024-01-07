@@ -34,6 +34,8 @@
 		<includefile ruleset="CallOfCthulhu7E" source="campaign/record_char_main_coc7e.xml" />
 
 		<includefile source="graphics/graphics_portraits.xml" />
+
+		<includefile source="desktop/template_desktop.xml" />
 		
 		<!-- Icon -->
 		<icon name="bp_icon" file="graphics/bp_icon.png" />
