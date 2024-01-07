@@ -7,7 +7,7 @@
 
 <root>
     <!-- Change height to compensate portrait changes -->
-	<template name="sub_charsheet_overview">
+	<template name="sub_charsheet_overview" ruleset="5E">
 		<subwindow>
 			<anchored position="insidetopleft" offset="15,20" height="162">
 				<right offset="-30" />

@@ -28,12 +28,15 @@
 			
 			<!-- Traits -->
 			<frame_char name="traitsframe" merge="delete" />
-			<string_labeled name="traits" merge="delete" />	
+			<string_labeled name="traits" merge="delete" />
 
-            <!-- Abilities -->
-			<frame_char name="abilityframe">
-				<bounds>15,0,275,225</bounds>
-			</frame_char>
+			<!-- Abilities (attributes) -->
+			<subwindow name="attributes">
+				<bounds>15,0,290,225</bounds>
+				<class>char_attributes</class>
+				<activate/>
+			</subwindow>
+
             <!-- Speed -->
 			<frame_char name="speedframe">
 				<bounds>15,225,385,50</bounds>
@@ -59,5 +62,5 @@
 				<bounds>400,225,95,210</bounds>
 			</frame_char>
 		</sheetdata>
-	</windowclass>	
+	</windowclass>
 </root>

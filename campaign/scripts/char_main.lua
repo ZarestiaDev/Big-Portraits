@@ -79,13 +79,13 @@ function onPCTypeChanged()
 	dying_linked_label.setVisible(bLinkedPC);
 	button_hpdetails.setVisible(not bLinkedPC);
 	
-	parentcontrol.window.ancestryframe.setVisible(not bLinkedPC);
-	parentcontrol.window.racelink.setVisible(not bLinkedPC);
-	parentcontrol.window.race.setVisible(not bLinkedPC);
-	parentcontrol.window.backgroundframe.setVisible(not bLinkedPC);
-	parentcontrol.window.backgroundlink.setVisible(not bLinkedPC);
-	parentcontrol.window.background.setVisible(not bLinkedPC);
-	parentcontrol.window.button_classlevel.setVisible(not bLinkedPC);
+	parentcontrol.window.overview.subwindow.ancestryframe.setVisible(not bLinkedPC);
+	parentcontrol.window.overview.subwindow.racelink.setVisible(not bLinkedPC);
+	parentcontrol.window.overview.subwindow.race.setVisible(not bLinkedPC);
+	parentcontrol.window.overview.subwindow.backgroundframe.setVisible(not bLinkedPC);
+	parentcontrol.window.overview.subwindow.backgroundlink.setVisible(not bLinkedPC);
+	parentcontrol.window.overview.subwindow.background.setVisible(not bLinkedPC);
+	parentcontrol.window.overview.subwindow.button_classlevel.setVisible(not bLinkedPC);
 		
 	if sPCType == "eidolon" then
 		local tLinkedPCs = LinkedPCManager.getBaseLinkedPCs(nodeChar);

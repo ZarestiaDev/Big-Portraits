@@ -18,20 +18,20 @@
 	</windowclass>
 
 	<windowclass name="charsheet_overview" merge="join">
-		<script file="campaign/scripts/char_overview.lua" />
+		<script file="campaign/scripts/char_overview5e.lua" />
 		<sheetdata>
 			<picture_charsheet name="portrait" />
 			
-			<label_charframetop name="nametitle">
-				<anchored to="rightanchor" height="20">
-					<top offset="2" />
-					<left parent="leftanchor" relation="relative" offset="-15" />
-					<right relation="relative" offset="-15" />
+			<label_charframetop name="nametitle" merge="replace">
+				<anchored height="20">
+					<top offset="7" />
+					<left offset="170" />
+					<right offset="-90" />
 				</anchored>
 				<static textres="char_label_name" />
 			</label_charframetop>
 			<stringu name="name">
-				<anchored to="nametitle" position="below" offset="3,5" height="20" />
+				<anchored to="nametitle" position="below" offset="0,5" height="20" />
 			</stringu>
 
 			<number_charlevel name="level">

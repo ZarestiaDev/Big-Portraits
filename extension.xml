@@ -3,7 +3,7 @@
 <root version="3.3" >
 	<properties>
 		<name>Feature: Big Portraits</name>
-		<version>1.6</version>
+		<version>1.7</version>
 		<loadorder>51</loadorder>
 		<description>
 			<text>Making Portraits actually visible</text>
@@ -23,20 +23,21 @@
 		</ruleset>
 	</properties>
 
-	<announcement text="https://forge.fantasygrounds.com/shop/items/647/view \n5E/PFRPG2/CoC7E Big Portraits - v1.6 by Zarestia" font="emotefont" icon="bp_icon" />
+	<announcement text="https://forge.fantasygrounds.com/shop/items/647/view \n5E/PFRPG2/CoC7E Big Portraits - v1.7 by Zarestia" font="emotefont" icon="bp_icon" />
 
 	<base>
 		<includefile ruleset="5E" source="campaign/record_char_5e.xml" />
 		<includefile ruleset="5E" source="campaign/record_char_main_5e.xml" />
-		<includefile ruleset="5E" source="campaign/template_char_5e.xml" />
+		<includefile ruleset="5E|PFRPG2|PFRPG2-Legacy" source="campaign/template_char_5e.xml" />
 
-		<includefile ruleset="PFRPG2" source="campaign/record_char_pfrpg2.xml" />
-		<includefile ruleset="PFRPG2" source="campaign/record_char_main_pfrpg2.xml" />
+		<includefile ruleset="PFRPG2|PFRPG2-Legacy" source="campaign/record_char_pfrpg2.xml" />
+		<includefile ruleset="PFRPG2|PFRPG2-Legacy" source="campaign/record_char_main_pfrpg2.xml" />
 
 		<includefile ruleset="CallOfCthulhu7E" source="campaign/record_char_coc7e.xml" />
 		<includefile ruleset="CallOfCthulhu7E" source="campaign/record_char_main_coc7e.xml" />
 
 		<includefile source="graphics/graphics_portraits.xml" />
+		<includefile ruleset="PFRPG2|PFRPG2-Legacy" source="graphics/graphics_icons.xml" />
 
 		<includefile source="desktop/template_desktop.xml" />
 		
