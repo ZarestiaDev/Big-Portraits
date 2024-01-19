@@ -23,14 +23,7 @@
 	<windowclass name="charsheet_overview" merge="join">
 		<script file="campaign/scripts/char_coc7e.lua" />
 		<sheetdata>
-			<genericcontrol name="portraitbase">
-				<anchored position="insidetopleft" offset="0,0" width="148" height="148" />
-				<icon>charlist_base</icon>
-				<disabled />
-			</genericcontrol>
-			<portrait_char name="portrait">
-				<anchored position="insidetopleft" offset="0,0" width="148" height="148" />
-			</portrait_char>
+			<picture_charsheet name="portrait" />
 			
 			<frame_char name="overviewframe">
 				<anchored to="rightanchor" height="50">
