@@ -20,8 +20,16 @@
 	<windowclass name="charsheet_overview" merge="join">
 		<script file="campaign/scripts/char_overview5e.lua" />
 		<sheetdata>
-			<picture_charsheet name="portrait" />
+			<!-- Portrait -->
+			<picture_charsheet name="portrait">
+				<anchored>
+					<top offset="55" />
+				</anchored>
+				<portraitsize>148</portraitsize>
+				<widgetsize>45</widgetsize>
+			</picture_charsheet>
 			
+			<!-- Text -->
 			<label_charframetop name="nametitle" merge="replace">
 				<anchored height="20">
 					<top offset="7" />
@@ -42,7 +50,7 @@
 			<label_charframetop name="classleveltitle">
 				<anchored height="20">
 					<top offset="60" />
-					<left offset="170" />
+					<left parent="portrait" anchor="right" offset="15" />
 					<right offset="-80" />
 				</anchored>
 				<icons>char_class</icons>
@@ -81,7 +89,7 @@
 			<label_charframetop name="backgroundtitle">
 				<anchored height="20">
 					<top offset="115" />
-					<left offset="170" />
+					<left parent="portrait" anchor="right" offset="15" />
 					<right anchor="center" offset="50" />
 				</anchored>
 				<icons>char_background</icons>
