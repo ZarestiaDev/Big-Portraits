@@ -17,8 +17,8 @@
             <label_charframetop name="backgroundtitle" merge="delete"  />
             <linkfield name="backgroundlink" merge="delete"  />
             <stringu name="background" merge="delete"  />
-            <label_charframetop name="racetitle" merge="delete"  />
-            <genericcontrol name="racerightanchor" merge="delete" />
+            <label_charframetop name="speciestitle" merge="delete"  />
+            <genericcontrol name="speciesrightanchor" merge="delete" />
             <linkfield_statich name="subracelink" merge="delete" />
             <linkfield_statich name="racelink" merge="delete"  />
             <stringu name="race" merge="delete"  />
