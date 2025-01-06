@@ -9,15 +9,25 @@
 	<windowclass name="charsheet_main" merge="join">
         <sheetdata>
             <number_charlevel name="level" merge="delete" />
+            <hn name="exp" merge="delete" />
+            <hn name="expneeded" merge="delete" />
+            <genericcontrol name="classlevelleftanchor" merge="delete" />
+            <genericcontrol name="classlevelrightanchor" merge="delete" />
+            <genericcontrol name="backgroundleftanchor" merge="delete" />
+            <genericcontrol name="backgroundrightanchor" merge="delete" />
             <label_charframetop name="classleveltitle" merge="delete" />
             <stringc_charclasslevel name="classlevel" merge="delete" />
-            <button_charclasslevel name="button_classlevel" merge="delete"  />
+            <button_charclasslevel name="button_classlevel" merge="delete" />
+            <button_iadd_recordtype name="button_classlevel_add" merge="delete"  />
+            <button_iadd_recordtype name="button_background_add" merge="delete"  />
+            <button_iadd_recordtype name="button_species_add" merge="delete"  />
             <label_charframetop name="profbonustitle" merge="delete"  />
             <number_linked name="profbonus" merge="delete"  />
             <label_charframetop name="backgroundtitle" merge="delete"  />
             <linkfield name="backgroundlink" merge="delete"  />
             <stringu name="background" merge="delete"  />
             <label_charframetop name="speciestitle" merge="delete"  />
+            <genericcontrol name="speciesleftanchor" merge="delete" />
             <genericcontrol name="speciesrightanchor" merge="delete" />
             <linkfield_statich name="subracelink" merge="delete" />
             <linkfield_statich name="racelink" merge="delete"  />

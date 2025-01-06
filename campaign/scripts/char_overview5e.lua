@@ -24,18 +24,33 @@ end
 
 -- Zarestia adding code from char_main
 
-function onDrop(x, y, draginfo)
-    if draginfo.isType("shortcut") then
-        local sClass, sRecord = draginfo.getShortcutData();
-
-        if StringManager.contains({"reference_class", "reference_race", "reference_subrace", "reference_background"}, sClass) then
-            CharManager.addInfoDB(getDatabaseNode(), sClass, sRecord);
-            return true;
-        end
-    end
+function onInit()
+	self.onXPChanged();
+	self.onBackgroundChanged();
+	self.onSpeciesChanged();
+	CharManager.refreshNextLevelXP(getDatabaseNode());
 end
-
+function onDrop(x, y, draginfo)
+	if draginfo.isType("shortcut") then
+		local sClass, sRecord = draginfo.getShortcutData();
+		if StringManager.contains({ "reference_class", "reference_race", "reference_subrace", "reference_background", "reference_feat", }, sClass) then
+			return CharBuildDropManager.addInfoDB(getDatabaseNode(), sClass, sRecord);
+		end
+	end
+end
 function onHealthChanged()
-    local sColor = ActorManager5E.getPCSheetWoundColor(getDatabaseNode());
-    wounds.setColor(sColor);
+	wounds.setColor(ActorManager5E.getPCSheetWoundColor(getDatabaseNode()));
+end
+function onXPChanged()
+	local nLevel = level.getValue();
+	local nXPNeeded = expneeded.getValue();
+	local nXP = exp.getValue();
+	local bShowLevelAdd = ((nLevel == 0) or ((nXPNeeded > 0) and (nXP >= nXPNeeded)));
+	button_classlevel_add.setVisible(bShowLevelAdd);
+end
+function onBackgroundChanged()
+	button_background_add.setVisible(background.isEmpty());
+end
+function onSpeciesChanged()
+	button_species_add.setVisible(race.isEmpty());
 end

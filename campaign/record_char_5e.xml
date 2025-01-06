@@ -45,100 +45,196 @@
 			<number_charlevel name="level">
 				<bounds>0,0,0,0</bounds>
 				<invisible />
+				<script>
+					function onValueChanged()
+						window.onXPChanged();
+					end
+				</script>
 			</number_charlevel>
+			<hn name="exp">
+				<script>
+					function onValueChanged()
+						window.onXPChanged();
+					end
+				</script>
+			</hn>
+			<hn name="expneeded">
+				<script>
+					function onValueChanged()
+						window.onXPChanged();
+					end
+				</script>
+			</hn>
 
 			<label_charframetop name="classleveltitle">
 				<anchored height="20">
 					<top offset="60" />
 					<left parent="portrait" anchor="right" offset="15" />
-					<right offset="-80" />
+					<right offset="-70" />
 				</anchored>
 				<icons>char_class</icons>
 				<static textres="char_label_classlevel" />
 			</label_charframetop>
+			<genericcontrol name="classlevelleftanchor">
+				<anchored to="classleveltitle" position="belowleft" offset="-10,5" />
+				<disabled />
+			</genericcontrol>
+			<genericcontrol name="classlevelrightanchor">
+				<anchored to="classleveltitle" position="belowright" offset="-10,5" />
+				<disabled />
+			</genericcontrol>
+			<button_charclasslevel name="button_classlevel">
+				<anchored to="classlevelrightanchor">
+					<top />
+					<right relation="relative" offset="-2" postoffset="-2" />
+				</anchored>
+			</button_charclasslevel>
+			<button_iadd_recordtype name="button_classlevel_add">
+				<anchored to="classlevelrightanchor">
+					<top />
+					<right relation="relative" offset="-2" postoffset="-2" />
+				</anchored>
+				<recordtype>class</recordtype>
+			</button_iadd_recordtype>
 			<stringc_charclasslevel name="classlevel">
-				<anchored to="classleveltitle" position="insidetopleft" offset="-5,25">
-					<right offset="-10" />
+				<anchored to="classlevelleftanchor">
+					<top />
+					<left relation="relative" offset="5" postoffset="5" />
+					<right parent="classlevelrightanchor" relation="relative" offset="-5" postoffset="-5" />
 				</anchored>
 			</stringc_charclasslevel>
-			
-			<button_charclasslevel name="button_classlevel">
-				<anchored to="classlevel" position="righthigh" offset="0,0" />
-			</button_charclasslevel>
 			<label_charframetop name="profbonustitle">
 				<anchored to="classleveltitle" position="right" offset="20,0" width="35" />
 				<static textres="char_label_profbonus" />
 			</label_charframetop>
-			<number_linked name="profbonus">
+			<number_linked_framed name="profbonus">
 				<anchored to="profbonustitle" position="insidetop" offset="0,27" height="20" />
-				<frame name="fieldlight" offset="7,5,7,5" />
 				<displaysign />
-				<source>
-					<name>level</name>
-					<op>+</op>
-				</source>
+				<source><name>level</name><op>+</op></source>
 				<script>
 					function onSourceUpdate()
-						local nLevel = calculateSources();
-						local nBonus = math.max(2, math.floor((nLevel - 1) / 4) + 2);
-						setValue(nBonus);
+						setValue(math.max(2, math.floor((calculateSources() - 1) / 4) + 2));
 					end
 				</script>
-			</number_linked>
+			</number_linked_framed>
 
 			<label_charframetop name="backgroundtitle">
 				<anchored height="20">
 					<top offset="115" />
 					<left parent="portrait" anchor="right" offset="15" />
-					<right anchor="center" offset="50" />
+					<right anchor="center" offset="80" />
 				</anchored>
 				<icons>char_background</icons>
 				<static textres="char_label_background" />
 			</label_charframetop>
+			<genericcontrol name="backgroundleftanchor">
+				<anchored to="backgroundtitle" position="belowleft" offset="-10,5" />
+				<disabled />
+			</genericcontrol>
+			<genericcontrol name="backgroundrightanchor">
+				<anchored to="backgroundtitle" position="belowright" offset="-10,5" />
+				<disabled />
+			</genericcontrol>
 			<linkfield_statich name="backgroundlink">
-				<anchored to="backgroundtitle" position="belowright" offset="-10,5" width="20" height="20" />
-				<description field="background" />
-				<closetoggle />
-			</linkfield_statich>
-			<stringu name="background">
-				<anchored to="backgroundtitle" position="belowleft" offset="-5,5" height="20">
-					<right parent="backgroundlink" anchor="left" offset="-5" />
+				<anchored to="backgroundrightanchor" width="20" height="20">
+					<top />
+					<right relation="relative" offset="-2" postoffset="-2" />
 				</anchored>
+				<description field="background" />
+				<script>
+					function onClickDown()
+						return true;
+					end
+					function onClickRelease()
+						return CharManager.onBackgroundLinkPressed(window.getDatabaseNode());
+					end
+				</script>
+			</linkfield_statich>
+			<button_iadd_recordtype name="button_background_add">
+				<anchored to="backgroundrightanchor">
+					<top />
+					<right relation="relative" offset="-2" postoffset="-2" />
+				</anchored>
+				<recordtype>background</recordtype>
+			</button_iadd_recordtype>
+			<stringu name="background">
+				<anchored to="backgroundleftanchor">
+					<top />
+					<left relation="relative" offset="5" postoffset="5" />
+					<right parent="backgroundrightanchor" relation="relative" offset="-5" postoffset="-5" />
+				</anchored>
+				<script>
+					function onValueChanged()
+						window.onBackgroundChanged();
+					end
+				</script>
 			</stringu>
 
-			<label_charframetop name="racetitle">
+			<label_charframetop name="speciestitle">
 				<anchored height="20">
 					<top offset="115" />
-					<left anchor="center" offset="80" />
+					<left anchor="center" offset="100" />
 					<right offset="-15" />
 				</anchored>
 				<icons>char_race</icons>
 				<static textres="char_label_race" />
 			</label_charframetop>
-			<genericcontrol name="racerightanchor">
-				<anchored to="racetitle" position="belowright" offset="-5,5" width="0" height="20" />
+			<genericcontrol name="speciesleftanchor">
+				<anchored to="speciestitle" position="belowleft" offset="-10,5" />
+				<disabled />
+			</genericcontrol>
+			<genericcontrol name="speciesrightanchor">
+				<anchored to="speciestitle" position="belowright" offset="-10,5" />
 				<disabled />
 			</genericcontrol>
 			<linkfield_statich name="subracelink">
-				<anchored to="racerightanchor" width="20" height="20">
+				<anchored to="speciesrightanchor" width="20" height="20">
 					<top />
-					<right anchor="left" relation="relative" offset="0" />
+					<right relation="relative" offset="-2" postoffset="-2" />
 				</anchored>
 				<description field="race" />
-				<closetoggle />
+				<script>
+					function onClickDown()
+						return true;
+					end
+					function onClickRelease()
+						return CharManager.onAncestryLinkPressed(window.getDatabaseNode());
+					end
+				</script>
 			</linkfield_statich>
 			<linkfield_statich name="racelink">
-				<anchored to="racerightanchor" width="20" height="20">
+				<anchored to="speciesrightanchor" width="20" height="20">
 					<top />
-					<right anchor="left" relation="relative" offset="0" />
+					<right relation="relative" offset="-2" postoffset="-2" />
 				</anchored>
 				<description field="race" />
-				<closetoggle />
+				<script>
+					function onClickDown()
+						return true;
+					end
+					function onClickRelease()
+						return CharManager.onSpeciesLinkPressed(window.getDatabaseNode());
+					end
+				</script>
 			</linkfield_statich>
-			<stringu name="race">
-				<anchored to="racetitle" position="belowleft" offset="-5,5" height="20">
-					<right parent="racerightanchor" anchor="left" relation="relative" offset="-5" />
+			<button_iadd_recordtype name="button_species_add">
+				<anchored to="speciesrightanchor">
+					<top />
+					<right relation="relative" offset="-2" postoffset="-2" />
 				</anchored>
+				<recordtype>race</recordtype>
+			</button_iadd_recordtype>
+			<stringu name="race">
+				<anchored to="speciesleftanchor">
+					<top />
+					<left relation="relative" offset="5" postoffset="5" />
+					<right parent="speciesrightanchor" relation="relative" offset="-5" postoffset="-5" />
+				</anchored>
+				<script>
+					function onValueChanged()
+						window.onSpeciesChanged();
+					end
+				</script>
 			</stringu>
 		</sheetdata>
 	</windowclass>
