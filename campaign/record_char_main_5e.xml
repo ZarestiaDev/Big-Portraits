@@ -7,8 +7,13 @@
 
 <root>
 	<windowclass name="charsheet_main" merge="join">
+		<script>
+			function onInit()
+				--do nothing
+			end
+		</script>
         <sheetdata>
-            <number_charlevel name="level" merge="delete" />
+        	<number_charlevel name="level" merge="delete" />
             <hn name="exp" merge="delete" />
             <hn name="expneeded" merge="delete" />
             <genericcontrol name="classlevelleftanchor" merge="delete" />

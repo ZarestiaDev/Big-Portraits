@@ -28,20 +28,8 @@
 				<portraitsize>148</portraitsize>
 				<widgetsize>45</widgetsize>
 			</picture_charsheet>
-			
-			<!-- Text -->
-			<label_charframetop name="nametitle" merge="replace">
-				<anchored height="20">
-					<top offset="7" />
-					<left offset="170" />
-					<right offset="-90" />
-				</anchored>
-				<static textres="char_label_name" />
-			</label_charframetop>
-			<stringu name="name">
-				<anchored to="nametitle" position="below" offset="0,5" height="20" />
-			</stringu>
 
+			<!-- Text -->
 			<number_charlevel name="level">
 				<bounds>0,0,0,0</bounds>
 				<invisible />

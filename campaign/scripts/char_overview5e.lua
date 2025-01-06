@@ -6,6 +6,10 @@
 function onInit()
 	OptionsManager.registerCallback("HRIS", onHRISOptionChanged);
 	onHRISOptionChanged();
+	self.onXPChanged();
+	self.onBackgroundChanged();
+	self.onSpeciesChanged();
+	CharManager.refreshNextLevelXP(getDatabaseNode());
 end
 function onClose()
 	OptionsManager.unregisterCallback("HRIS", onHRISOptionChanged);
@@ -13,7 +17,7 @@ end
 
 function onHRISOptionChanged()
 	local sOptHRIS = OptionsManager.getOption("HRIS");
-	local nOptHRIS = math.min(math.max(tonumber(sOptHRIS) or 1, 1), 3);
+	local nOptHRIS = math.min(math.max(tonumber(sOptHRIS) or 1, 1), 5);
 	
 	if inspiration.getMaxValue() ~= nOptHRIS then
 		inspiration.setMaxValue(nOptHRIS);
@@ -24,12 +28,6 @@ end
 
 -- Zarestia adding code from char_main
 
-function onInit()
-	self.onXPChanged();
-	self.onBackgroundChanged();
-	self.onSpeciesChanged();
-	CharManager.refreshNextLevelXP(getDatabaseNode());
-end
 function onDrop(x, y, draginfo)
 	if draginfo.isType("shortcut") then
 		local sClass, sRecord = draginfo.getShortcutData();
